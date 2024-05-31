@@ -19,8 +19,8 @@ class BookManager:
         self.window.iconbitmap(r'img\book.ico')
         self.window.wm_state('zoomed')
         self.window.configure(bg='#DDBEAA')
-        self.label = tk.Label(self.window, text="Путь до файла не выбран")
-        self.label.pack(pady=20)
+        self.label = tk.Label(self.window, bg='#DDBEAA')
+        self.label.pack(pady=60)
 
     def create_text_area(self):
         self.text_area = tk.Text(self.window, wrap='word', width=50, height=15)
@@ -41,11 +41,11 @@ class BookManager:
 
     def add_button_book(self):
         self.btn = ttk.Button(self.window, text="Добавить книгу", command=self.open_file)
-        self.btn.place(relx=0.1, rely=0.10)
+        self.btn.place(relx=0.1, rely=0.07)
 
     def delete_button_book(self):
         self.btn2 = ttk.Button(self.window, text="Удалить книгу", command=self.delete_book)
-        self.btn2.place(relx=0.8, rely=0.10)
+        self.btn2.place(relx=0.8, rely=0.07)
 
 
 if __name__ == '__main__':
