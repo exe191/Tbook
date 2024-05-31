@@ -1,16 +1,21 @@
 import tkinter as tk
 from tkinter import ttk, filedialog
+from tkhtmlview import HTMLLabel
+
+
+def create_text_area(text_area):
+    return text_area
 
 
 class BookManager:
     def __init__(self, window):
+        self.html_view = None
         self.window = window
         self.text_area = None
         self.label = None
         self.btn = None
         self.btn2 = None
         self.create_window()
-        self.create_text_area()
         self.add_button_book()
         self.delete_button_book()
 
@@ -22,10 +27,6 @@ class BookManager:
         self.label = tk.Label(self.window, bg='#DDBEAA')
         self.label.pack(pady=60)
 
-    def create_text_area(self):
-        self.text_area = tk.Text(self.window, wrap='word', width=50, height=15)
-        self.text_area.pack(expand=True, fill='both')
-
     def open_file(self):
         file_path = filedialog.askopenfilename(
             filetypes=(('Текстовые файлы', '*.fb2'), ('Все файлы', '*.*'))
@@ -33,11 +34,11 @@ class BookManager:
         if file_path:
             with open(file_path, 'r', encoding='utf-8') as file:
                 content = file.read()
-                self.text_area.delete(1.0, tk.END)
-                self.text_area.insert(tk.END, content)
+                self.display_html(content)
 
     def delete_book(self):
-        self.text_area.delete(1.0, tk.END)
+        if self.html_view:
+            self.html_view.destroy()
 
     def add_button_book(self):
         self.btn = ttk.Button(self.window, text="Добавить книгу", command=self.open_file)
@@ -46,6 +47,10 @@ class BookManager:
     def delete_button_book(self):
         self.btn2 = ttk.Button(self.window, text="Удалить книгу", command=self.delete_book)
         self.btn2.place(relx=0.8, rely=0.07)
+
+    def display_html(self, html_content):
+        self.html_view = HTMLLabel(self.window, html=html_content)
+        self.html_view.pack(expand=True, fill='both')
 
 
 if __name__ == '__main__':
